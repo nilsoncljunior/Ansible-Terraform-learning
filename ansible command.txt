@@ -1,0 +1,1 @@
+ansible-playbook playbook.yml -u ubuntu --private-key key.pem -i hosts.yml
