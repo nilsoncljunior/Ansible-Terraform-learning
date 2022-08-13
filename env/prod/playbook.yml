@@ -14,17 +14,23 @@
       update_cache: yes
     #como root
     become: yes
+  - name: Git Clone
+    ansible.builtin.git:
+      repo: https://github.com/alura-cursos/clientes-leo-api.git
+      dest: /home/ubuntu/project
+      version: master
   - name: Instalando dependencias com pip (Django e Django Rest)
     pip: 
       virtualenv: /home/ubuntu/venv
       name:
         - django
         - djangorestframework
-  - name: Iniciando o projeto
-    shell: '. /home/ubuntu/venv/bin/activate; django-admin startproject setup /home/ubuntu/'      
   - name: Alterando host do settings
     lineinfile: 
-      path: /home/ubuntu/setup/settings.py
+      path: /home/ubuntu/project/setup/settings.py
       regexp: 'ALLOWED_HOSTS'
       line: 'ALLOWED_HOSTS = ["*"]'
       backrefs: yes
+
+      #pip freeze - Listar os pacotes instalados
+      #python manage.py runserver 0.0.0.0:8000 - Iniciar o Django

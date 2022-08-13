@@ -41,3 +41,4 @@ terraform.rc
 
 #key files
 *.pem
+*key-*

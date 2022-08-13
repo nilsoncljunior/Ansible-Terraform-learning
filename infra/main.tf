@@ -11,14 +11,23 @@ terraform {
 
 provider "aws" {
   profile = "nilson"
-  region  = "us-east-1"
+  region  = var.region
 }
 
 resource "aws_instance" "app_server" {
   ami           = "ami-0729e439b6769d6ab"
-  instance_type = "t2.micro"
-  key_name = "key"
+  instance_type = var.instance
+  key_name = var.key
   tags = {
     Name = "ExampleB"
   }
 }  
+
+resource "aws_key_pair" "keySSH" {
+  key_name = var.key
+  public_key = file("${var.key}.pub")
+}
+
+output "public-IP" {
+  value = aws_instance.app_server.public_ip
+}
