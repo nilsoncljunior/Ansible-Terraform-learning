@@ -3,12 +3,13 @@ module "aws-prod" {
   instance = "t2.micro"
   region = "us-east-1"
   key = "key-prod"
-  security_group = "default-sg-prod"
+  security_group = "prod-sg"
   tags = "prod sg"
-  description = "prod sg"
-
+  minimoasg = 1
+  maximoasg = 3
+  nameasg = "prod"
 }
 
-output "public-IP-prod" {
-  value = module.aws-prod.public-IP
-}
+#output "public-IP-prod" {
+#  value = module.aws-prod.public-IP
+#}

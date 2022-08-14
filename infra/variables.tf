@@ -13,7 +13,12 @@ variable "security_group" {
 variable "tags" {
   type = string
 }
-variable "description" {
+variable "maximoasg" {
+  type = number
+}
+variable "minimoasg" {
+  type = number
+}
+variable "nameasg" {
   type = string
-  
 }
