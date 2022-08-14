@@ -19,18 +19,22 @@
       repo: https://github.com/alura-cursos/clientes-leo-api.git
       dest: /home/ubuntu/project
       version: master
+      force: yes
   - name: Instalando dependencias com pip (Django e Django Rest)
     pip: 
-      virtualenv: /home/ubuntu/venv
-      name:
-        - django
-        - djangorestframework
+      virtualenv: /home/ubuntu/project/venv
+      requirements: /home/ubuntu/project/requirements.txt
   - name: Alterando host do settings
     lineinfile: 
       path: /home/ubuntu/project/setup/settings.py
       regexp: 'ALLOWED_HOSTS'
       line: 'ALLOWED_HOSTS = ["*"]'
       backrefs: yes
-
+  - name: configurando o banco de dados
+    shell: '. /home/ubuntu/venv/bin/activate; python /home/ubuntu/project/manage.py migrate'
+  - name: Carregando os dados iniciais
+    shell: '. /home/ubuntu/venv/bin/activate; python /home/ubuntu/project/manage.py loaddata clientes.json'
+  - name: Iniciando o servidor
+    shell: '. /home/ubuntu/venv/bin/activate; nohup python /home/ubuntu/project/manage.py runserver 0.0.0.0:8000 &'  
       #pip freeze - Listar os pacotes instalados
       #python manage.py runserver 0.0.0.0:8000 - Iniciar o Django
